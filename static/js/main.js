@@ -227,7 +227,7 @@ function post_fail(e) {
   let keys = Object.keys(e.responseJSON.message)
         .join(', ')
         .replace('product', 'Producto')
-        .replace('location', 'Dirección');
+        .replace('location', 'Ubicación');
   let error = document.getElementById('error-post');
   let default_html = error.innerHTML;
   error.classList.toggle("hidden");
@@ -262,4 +262,19 @@ function searchTable() {
       }
 
   }
+}
+
+
+function create_location_autocomplete(class_name) {
+  // $('.'+class_name).typeahead();
+  $.get("http://api.sintrafico.com/inventory/location?apiKey="+apiKey, function(data){
+    $('.'+class_name).typeahead({ source:data.location });
+  },'json');
+}
+
+function create_product_autocomplete(class_name) {
+  // $('.'+class_name).typeahead();
+  $.get("http://api.sintrafico.com/inventory/product?key="+apiKey, function(data){
+    $('.'+class_name).typeahead({ source:data.product });
+  },'json');
 }

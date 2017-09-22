@@ -14,6 +14,7 @@
     <!-- <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script> -->
     <!-- <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script> -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="static/js/bootstrap3-typeahead.min.js"></script>
     <script src="static/js/main.js"></script>
   </head>
   <body>
@@ -70,11 +71,11 @@
             <form>
               <div class="form-group">
                 <label for="location">Ubicación</label>
-                <input type="text" class="form-control" id="location" placeholder="">
+                <input type="text" class="form-control location" id="location" placeholder="">
               </div>
               <div class="form-group">
                 <label for="product">Producto</label>
-                <input type="text" class="form-control" id="product" placeholder="">
+                <input type="text" class="form-control product" id="product" placeholder="">
               </div>
               <div class="form-group">
                 <label for="quantity">Cantidad</label>
@@ -125,7 +126,7 @@
               </div>
               <div class="form-group">
                 <label for="current-warehouse">Centro de Acopio</label>
-                <input type="text" class="form-control" id="current-warehouse" placeholder="">
+                <input type="text" class="form-control location" id="current-warehouse" placeholder="">
               </div>
             </form>
           </div>
@@ -139,6 +140,8 @@
 
     <script type="text/javascript">
       get_data('https://api.sintrafico.com/invoice', {}, invoice_table)
+      create_location_autocomplete('location');
+      create_product_autocomplete('product');
     </script>
   </body>
 </html>
