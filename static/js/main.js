@@ -189,7 +189,18 @@ function updateInvoices() {
   if (verified) {
     data.verified = true;
   }
-  put_data('https://api.sintrafico.com/invoice/'+item_id, data, post_success, post_fail, 'invoice')
+  if (warehouse) {
+      put_data('https://api.sintrafico.com/invoice/'+item_id, data, post_success, post_fail, 'invoice')
+  } else {
+    let error = document.getElementById('error-put');
+    let default_html = error.innerHTML;
+    error.classList.toggle("hidden");
+    error.innerHTML += 'Faltan los datos de Centro de Acopio';
+    setTimeout(function(){
+      error.classList.toggle("hidden");
+      error.innerHTML = default_html;
+    }, 3000);
+  }
 }
 
 function post_success(e, type){
