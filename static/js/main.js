@@ -187,7 +187,7 @@ function saveInvoice() {
   let location = document.getElementById('location').value,
       product = document.getElementById('product').value,
       quantity = document.getElementById('quantity').value;
-  let data = {'product': product, 'location': location, 'quantity': parseInt(quantity), 'warehouse': 'No asignada'}
+  let data = {'product': product, 'location': location, 'quantity': parseInt(quantity), 'warehouse': 'No asignado'}
   post_data('https://api.sintrafico.com/invoice', data, post_success, post_fail, 'invoice' )
 }
 
