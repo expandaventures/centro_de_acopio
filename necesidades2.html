@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Necesidades</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/css/main.css">
+
+    <script
+      src="https://code.jquery.com/jquery-2.2.4.min.js"
+      integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+      crossorigin="anonymous"></script>
+    <!-- <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script> -->
+    <!-- <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script> -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="static/js/bootstrap3-typeahead.min.js"></script>
+    <script src="static/js/main.js"></script>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-12 col-md-offset-2 col-sm-12 col-xs-12">
+          <h1 class="bg-primary center">Necesidades</h1>
+        </div>
+        <div class="col-lg-8 col-lg-offset-2 col-md-12 col-md-offset-2 col-sm-12 col-xs-12">
+          <div class="alert alert-success hidden" id="ok-post">
+            <strong>Operación exitosa</strong>
+          </div>
+          <div class="table responsive">
+            <div class="row">
+              <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <input type="text" id="search" onkeyup="searchTable()" placeholder="Busqueda" class="form-control">
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#newInvoice">Agregar nueva necesidad</button>
+              </div>
+            </div>
+            <table id="table" class="table">
+            <thead>
+                <tr>
+                    <th>Ubicación</th>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                    <th>Verificado</th>
+                    <th>Centro de Acopio</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="inventory-info">
+            </tbody>
+          </div>
+        </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="newInvoice" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Captura de nueva necesidad</h4>
+            <div class="alert alert-danger hidden" id="error-post">
+              <strong>Error al guardar la necesidad</strong>
+            </div>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="form-group">
+                <label for="location">Ubicación</label>
+                <input type="text" class="form-control location" id="location" placeholder="">
+              </div>
+              <div class="form-group">
+                <label for="product">Producto</label>
+                <input type="text" class="form-control product" id="product" placeholder="">
+              </div>
+              <div class="form-group">
+                <label for="quantity">Cantidad</label>
+                <input type="text" class="form-control" id="quantity" placeholder="" value="1">
+              </div>
+            </form>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+            <button type="button" class="btn btn-primary" id="save-modal" onclick="saveInvoice()">Guardar producto</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modifyInvoice" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Modificación Necesidad</h4>
+            <div class="alert alert-danger hidden" id="error-put">
+              <strong>Error al guardar la necesidad</strong>
+            </div>
+          </div>
+          <div class="modal-body">
+            <form>
+              <input type="text" id="item-id-modify" value="" hidden>
+              <div class="form-group">
+                <label for="current-location">Ubicación</label>
+                <input type="text" class="form-control" id="current-location" placeholder="" disabled>
+              </div>
+              <div class="form-group">
+                <label for="current-product">Producto</label>
+                <input type="text" class="form-control" id="current-product" placeholder="" disabled>
+              </div>
+              <div class="form-group">
+                <label for="current-quantity">Cantidad</label>
+                <input type="text" class="form-control" id="current-quantity" placeholder="">
+              </div>
+              <div class="form-group">
+                <label for="current-verified">
+                  <input type="checkbox" class="" id="current-verified">
+                  Verificada
+                </label>
+              </div>
+              <div class="form-group">
+                <label for="current-warehouse">Centro de Acopio</label>
+                <input type="text" class="form-control location" id="current-warehouse" placeholder="">
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+            <button type="button" class="btn btn-primary" id="save-modal" onclick="updateInvoices()">Guardar producto</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+      get_data('https://api.sintrafico.com/invoice', {}, invoice_table)
+      create_location_autocomplete('location');
+      create_product_autocomplete('product');
+    </script>
+  </body>
+</html>
