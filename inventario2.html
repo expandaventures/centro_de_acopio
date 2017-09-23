@@ -15,7 +15,7 @@
     <!-- <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script> -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="static/js/bootstrap3-typeahead.min.js"></script>
-    <script src="static/js/main-readonly.js"></script>
+    <script src="static/js/main.js"></script>
   </head>
   <body>
     <div class="container-fluid">
@@ -129,8 +129,8 @@
 
     <script type="text/javascript">
       get_data('https://api.sintrafico.com/inventory', {}, inventory_table)
-      create_location_autocomplete('location');
-      create_product_autocomplete('product');
+      create_location_autocomplete('location', true);
+      create_product_autocomplete('product', true);
     </script>
   </body>
 </html>
