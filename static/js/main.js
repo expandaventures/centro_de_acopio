@@ -1,7 +1,7 @@
 'use strict';
 let apiKey = 'e36cab255c6af38416816095fd94dcb94284cefc28b56bb5b11699f4a1cb4497';
 
-function get_data(url, data, cb) {
+function get_data(url, data, cb, read_only) {
   data.apiKey = apiKey;
   $.ajax({
     crossDomain:true,
@@ -10,7 +10,7 @@ function get_data(url, data, cb) {
     data: data,
     async: true,
     success:function(e) {
-      (cb)(e);
+      (cb)(e, read_only);
     }
   });
 }
@@ -69,7 +69,7 @@ function delete_data(url, data, cb_success, cb_error, type) {
   });
 }
 
-function inventory_table(raw_data) {
+function inventory_table(raw_data, read_only) {
   let tbody = document.getElementById('inventory-info');
   $('#modifyProduct').on('show.bs.modal', function (e) {
     let button = $(e.relatedTarget);
@@ -87,7 +87,13 @@ function inventory_table(raw_data) {
       let tr = document.createElement('tr');
       let item_id = data[i].item;
       tr.id = item_id;
-      tr.innerHTML = '<td>' + data[i].location + '</td>'
+      if (read_only){
+        tr.innerHTML = '<td>' + data[i].location + '</td>'
+                    + '<td>' + data[i].product + '</td>'
+                    + '<td>' + data[i].quantity + '</td>'
+                    + '<td></td><td></td>'
+      } else {
+        tr.innerHTML = '<td>' + data[i].location + '</td>'
                     + '<td>' + data[i].product + '</td>'
                     + '<td>' + data[i].quantity + '</td>'
                     + '<td>'
@@ -100,6 +106,7 @@ function inventory_table(raw_data) {
                         +'<span class="glyphicon glyphicon-remove" ></span>'
                       +'</button>'
                     + '</td>'
+      }
       tbody.appendChild(tr);
       document.getElementById('del-'+item_id).addEventListener('click', function(e){
         delete_data('https://api.sintrafico.com/inventory/' + item_id, {}, post_success)
@@ -108,7 +115,7 @@ function inventory_table(raw_data) {
   }
 }
 
-function invoice_table(raw_data) {
+function invoice_table(raw_data, read_only) {
   let tbody = document.getElementById('inventory-info');
   $('#modifyInvoice').on('show.bs.modal', function (e) {
     let button = $(e.relatedTarget);
@@ -129,8 +136,16 @@ function invoice_table(raw_data) {
       let verified = data[i].verified
             ?'<span class="glyphicon glyphicon-ok-circle v-true" ></span>'
             :'<span class="glyphicon glyphicon-remove-circle v-false" ></span>'
-
-      tr.innerHTML = '<td>' + data[i].location + '</td>'
+      if (read_only){
+        tr.innerHTML = '<td>' + data[i].location + '</td>'
+                    + '<td>' + data[i].product + '</td>'
+                    + '<td>' + data[i].quantity + '</td>'
+                    + '<td>' + verified + '</td>'
+                    + '<td>' + data[i].warehouse + '</td>'
+                    + '<td></td>'
+                    + '<td></td>'
+      } else {
+        tr.innerHTML = '<td>' + data[i].location + '</td>'
                     + '<td>' + data[i].product + '</td>'
                     + '<td>' + data[i].quantity + '</td>'
                     + '<td>' + verified + '</td>'
@@ -145,6 +160,7 @@ function invoice_table(raw_data) {
                         +'<span class="glyphicon glyphicon-remove" ></span>'
                       +'</button>'
                     + '</td>'
+      }
       tbody.appendChild(tr);
       document.getElementById('del-'+item_id).addEventListener('click', function(e){
         delete_data('https://api.sintrafico.com/invoice/' + item_id, {}, post_success, post_fail, 'invoice')
