@@ -87,7 +87,7 @@ function inventory_table(raw_data, read_only) {
       let tr = document.createElement('tr');
       let item_id = data[i].item;
       tr.id = item_id;
-      let ts = (new Date(data[i].created_at).toLocaleString();
+      let ts = (new Date(data[i].created_at)).toLocaleString();
       if (read_only){
         tr.innerHTML = '<td>' + data[i].location + '</td>'
                     + '<td>' + data[i].product + '</td>'
@@ -136,7 +136,7 @@ function invoice_table(raw_data, read_only) {
       let tr = document.createElement('tr');
       let item_id = data[i].invoice;
       tr.id = item_id;
-      let ts = (new Date(data[i].created_at).toLocaleString();
+      let ts = (new Date(data[i].created_at)).toLocaleString();
       let verified = data[i].verified
             ?'<span class="glyphicon glyphicon-ok-circle v-true" ></span>'
             :'<span class="glyphicon glyphicon-remove-circle v-false" ></span>'
