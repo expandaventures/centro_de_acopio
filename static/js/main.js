@@ -109,11 +109,11 @@ function inventory_table(raw_data, read_only) {
                         +'<span class="glyphicon glyphicon-remove" ></span>'
                       +'</button>'
                     + '</td>'
+        document.getElementById('del-'+item_id).addEventListener('click', function(e){
+          delete_data('https://api.sintrafico.com/inventory/' + item_id, {}, post_success)
+        });
       }
       tbody.appendChild(tr);
-      //document.getElementById('del-'+item_id).addEventListener('click', function(e){
-      //  delete_data('https://api.sintrafico.com/inventory/' + item_id, {}, post_success)
-      //});
     }
   }
 }
@@ -166,11 +166,11 @@ function invoice_table(raw_data, read_only) {
                         +'<span class="glyphicon glyphicon-remove" ></span>'
                       +'</button>'
                     + '</td>'
+        document.getElementById('del-'+item_id).addEventListener('click', function(e){
+          delete_data('https://api.sintrafico.com/invoice/' + item_id, {}, post_success, post_fail, 'invoice')
+        });
       }
       tbody.appendChild(tr);
-      //document.getElementById('del-'+item_id).addEventListener('click', function(e){
-      //  delete_data('https://api.sintrafico.com/invoice/' + item_id, {}, post_success, post_fail, 'invoice')
-      //});
     }
   }
 }
